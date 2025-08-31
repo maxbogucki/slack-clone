@@ -1,6 +1,6 @@
 import { Inngest } from "inngest";
 import { connectDB } from "./db.js";
-import User from "../models/user.model.js";
+import { User } from "../models/user.model.js";
 
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "slack-clone" });
@@ -15,7 +15,7 @@ const syncUser = inngest.createFunction(
       event.data;
 
     const newUser = {
-      clearkId: id,
+      clerkId: id,
       email: email_addresses[0]?.email_address,
       name: `${first_name || ""} ${last_name || ""}`,
       image: image_url,
@@ -26,13 +26,13 @@ const syncUser = inngest.createFunction(
 );
 
 const deleteUserFromDB = inngest.createFunction(
-    { id: "delete-user-from-db"},
-    { event: "clerk/user.deleted" },
-    async ({ event }) => {
-        connectDB();
-        const { id } = event.data;
-        await User.findOneAndDelete({ clerkId: id });
-    }
+  { id: "delete-user-from-db" },
+  { event: "clerk/user.deleted" },
+  async ({ event }) => {
+    await connectDB();
+    const { id } = event.data;
+    await User.findOneAndDelete({ clerkId: id });
+  }
 );
 
 // Create an empty array where we'll export future Inngest functions
