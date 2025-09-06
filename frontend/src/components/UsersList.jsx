@@ -94,7 +94,7 @@ const UsersList = ({ activeChannel }) => {
             onClick={() => startDirectMessage(user)}
             className={`str-chat__channel-preview-messenger  ${
               isActive &&
-              "!bg-black/20 !hover:bg-black/20 border-l-8 border-purple-500 shadow-lg0"
+              "!bg-black/20 !hover:bg-black/20 border-l-8 border-purple-500 shadow-lg"
             }`}
           >
             <div className="flex items-center gap-2 w-full">
