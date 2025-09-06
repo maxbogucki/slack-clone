@@ -101,7 +101,15 @@ const CallContent = () => {
 
   useEffect(() => {
     if (callingState === CallingState.LEFT) {
-      navigate("/"); 
+      // Try to close the tab
+      window.close();
+
+      // If the tab cannot be closed (e.g., opened in same tab), navigate home
+      setTimeout(() => {
+        if (!window.closed) {
+          navigate("/");
+        }
+      }, 300);
     }
   }, [callingState, navigate]);
 
